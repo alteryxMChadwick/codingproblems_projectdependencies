@@ -1,0 +1,6 @@
+[package]
+name = "project_dependencies"
+version = "0.1.0"
+authors = ["alteryxMChadwick <30328870+alteryxMChadwick@users.noreply.github.com>"]
+
+[dependencies]
