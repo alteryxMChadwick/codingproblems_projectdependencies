@@ -19,12 +19,14 @@ project::depends_on(project &p)
 {
   if(this == &p)
   {
-    throw runtime_error("self dependency detected");
+    throw runtime_error(string{"'"}.append(p.unique_id).append("' depends directly on itself"));
   }
 
   if(end(p.depends) != find(begin(p.depends), end(p.depends), this))
   {
-    throw runtime_error(string{"circular dependency detected; "}.append(unique_id).append(" depends on ").append(p.unique_id).append(" which depends on ").append(unique_id));
+    throw runtime_error(
+      string{"circular dependency detected; '"}.append(unique_id).append("' depends on '").append(p.unique_id).append("' which depends on '").append(unique_id).append("'")
+    );
   }
 
   depends.push_back(&p);
@@ -40,7 +42,7 @@ do_build(project &p, function<void(project &)> visitor, vector<project *>& ids_s
     const auto itr = find(begin(ids_so_far), end(ids_so_far), &p);
     if (end(ids_so_far) != itr)
     {
-      throw runtime_error(string{"circular dependency detected; "}.append((*itr)->unique_id).append(" eventually depends on itself"));
+      throw runtime_error(string{"circular dependency detected; '"}.append((*itr)->unique_id).append("' eventually depends on itself"));
     }
     ids_so_far.push_back(&p);
   }
