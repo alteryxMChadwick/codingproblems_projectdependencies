@@ -24,14 +24,14 @@ int main(const int /*argc*/, const char *const []/*argv*/)
 			, {{"e"}, project{"e"}}
 			, {{"f"}, project{"f"}}
 		};
-
-		projects["d"].depends_on(projects["a"]);
-		projects["a"].depends_on(projects["d"]);
-		projects["b"].depends_on(projects["f"]);
-		projects["d"].depends_on(projects["b"]);
-		projects["a"].depends_on(projects["f"]);
+		
 		projects["c"].depends_on(projects["d"]);
-		projects["a"].depends_on(projects["c"]);
+		projects["d"].depends_on(projects["a"]);
+		projects["a"].depends_on(projects["f"]);
+
+		projects["d"].depends_on(projects["b"]);
+		projects["b"].depends_on(projects["f"]);
+
 
 		auto print_build_visitor = [](project &p)
 		{ 
