@@ -8,35 +8,44 @@
 #include "project.h"
 
 using std::cout;
+using std::runtime_error;
 using std::string;
 using std::unordered_map;
 
 int main(const int /*argc*/, const char *const []/*argv*/)
 {
-	auto projects = unordered_map<string, project>{
-		{{"a"}, project{"a"}}
-		, {{"b"}, project{"b"}}
-		, {{"c"}, project{"c"}}
-		, {{"d"}, project{"d"}}
-		, {{"e"}, project{"e"}}
-		, {{"f"}, project{"f"}}
-	};
-
-	projects["d"].add_dependency(projects["a"]);
-	projects["a"].add_dependency(projects["d"]);
-	projects["b"].add_dependency(projects["f"]);
-	projects["d"].add_dependency(projects["b"]);
-	projects["a"].add_dependency(projects["f"]);
-	projects["c"].add_dependency(projects["d"]);
-
-	auto print_build_visitor = [](project& p)
-	{ 
-		cout << p.unique_id << ' ';
-	};
-
-	for(auto& p : projects)
+	try
 	{
-		p.second.build(print_build_visitor);
+		auto projects = unordered_map<string, project>{
+			{{"a"}, project{"a"}}
+			, {{"b"}, project{"b"}}
+			, {{"c"}, project{"c"}}
+			, {{"d"}, project{"d"}}
+			, {{"e"}, project{"e"}}
+			, {{"f"}, project{"f"}}
+		};
+
+		projects["d"].depends_on(projects["a"]);
+		projects["a"].depends_on(projects["d"]);
+		projects["b"].depends_on(projects["f"]);
+		projects["d"].depends_on(projects["b"]);
+		projects["a"].depends_on(projects["f"]);
+		projects["c"].depends_on(projects["d"]);
+		projects["a"].depends_on(projects["c"]);
+
+		auto print_build_visitor = [](project &p)
+		{ 
+			cout << p.unique_id << ' ';
+		};
+
+		for(auto &p : projects)
+		{
+			p.second.build(print_build_visitor);
+		}
+	}
+	catch(runtime_error e)
+	{
+		cout << "FAILED: " << e.what();
 	}
 
 	cout << '\n';

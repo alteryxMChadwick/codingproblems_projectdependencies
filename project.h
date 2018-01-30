@@ -6,7 +6,7 @@
 
 struct project
 {
-	std::vector<project*> depends_on{};
+	std::vector<project *> depends{};
 	std::string unique_id{"DEFAULT"};
 	bool built{false};
 
@@ -14,7 +14,7 @@ struct project
 
 	project(std::string _n);
 
-	void add_dependency(project& p);
+	void depends_on(project & p);
 
-	void build(std::function<void(project&)> visitor);
+	void build(std::function<void(project &)> visitor);
 };
