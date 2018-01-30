@@ -46,7 +46,7 @@ int main(const int /*argc*/, const char *const []/*argv*/)
 	}
 	catch(runtime_error e)
 	{
-		cout << "FAILED: " << e.what();
+		cout << "\nFAILED: " << e.what();
 	}
 
 	cout << '\n';
