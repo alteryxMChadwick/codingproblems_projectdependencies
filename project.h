@@ -18,3 +18,8 @@ struct project
 
 	void build(std::function<void(project &)> visitor);
 };
+
+using flat_project_map = std::vector<project>;
+
+project&
+project_with_id(flat_project_map &projects, const std::string project_unique_id);

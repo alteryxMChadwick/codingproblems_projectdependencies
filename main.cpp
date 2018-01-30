@@ -11,28 +11,6 @@ using std::runtime_error;
 using std::string;
 using std::vector;
 
-using flat_project_map = vector<project>;
-
-project&
-project_with_id(flat_project_map &projects, const string project_unique_id)
-{
-	const auto itr = find_if(
-		begin(projects)
-		, end(projects)
-		, [&project_unique_id](const flat_project_map::value_type & project_pair)
-		{
-			return project_pair.unique_id == project_unique_id;
-		}
-	);
-
-	if (itr == end(projects))
-	{
-		throw runtime_error(string{"project with unique id '"}.append(project_unique_id).append("' does not exist"));
-	}
-
-	return *itr;
-}
-
 int main(const int /*argc*/, const char *const []/*argv*/)
 {
 	try
